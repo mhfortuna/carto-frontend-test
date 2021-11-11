@@ -1,7 +1,8 @@
 import React from "react";
+import { motion } from "framer-motion";
 import DateInput from "../DateInput/DateInput";
 
-export default function FloatingPanel({
+export default function FloatingFilterPanel({
   handleDateChange,
   datesState,
   loaded = true,
@@ -11,8 +12,13 @@ export default function FloatingPanel({
   };
 
   return (
-    <div className="flex flex-col absolute right-2 top-2 rounded-lg overflow-hidden bg-pink-800	bg-opacity-75 text-white p-3 gap-y-4">
-      <p className="font-light text-2xl text-center">Filter earthquakes</p>
+    <motion.div
+      className="flex flex-col absolute right-2 top-2 rounded-lg overflow-hidden bg-pink-800	bg-opacity-75 text-white p-4 gap-y-4 w-80"
+      initial={{ x: 600 }}
+      animate={{ x: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <p className="font-light text-2xl">Filter earthquakes</p>
       <div>
         <DateInput
           placeholder="Pick start date"
@@ -49,6 +55,6 @@ export default function FloatingPanel({
           />
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }

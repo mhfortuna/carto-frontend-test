@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { StaticMap, MapContext, NavigationControl } from "react-map-gl";
-import DeckGL, { GeoJsonLayer } from "deck.gl";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import DeckGL from "@deck.gl/react";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { GeoJsonLayer } from "@deck.gl/layers";
 import { toast } from "react-toastify";
 import { getEarthquakesByDate } from "../../api/earthquake-api";
-import FloatingPanel from "../FloatingPanel/FloatingPanel";
+import FloatingFilterPanel from "../FloatingFilterPanel";
+import FloatingDataPanel from "../FloatingDataPanel/FloatingDataPanel";
 
 const INITIAL_VIEW_STATE = {
   latitude: 33.6713333,
@@ -34,6 +38,7 @@ export default function MapContainer() {
   const [loaded, setLoaded] = useState(true);
   const dateRef = useRef(dates);
   dateRef.current = dates;
+  const [earthquakeDetails, setEarthquakeDetails] = useState();
 
   const fetchEarthquakeDataByDate = async (startDate, endDate) => {
     try {
@@ -46,25 +51,9 @@ export default function MapContainer() {
 
   const onClick = (event) => {
     if (event.object) {
-      toast(event.object.properties.title, { type: "success" });
-      console.log(event.object.properties);
+      setEarthquakeDetails(event.object);
     }
   };
-
-  const layers = new GeoJsonLayer({
-    id: "earthquakes",
-    data: earthquakeData.data,
-    // Styles
-    filled: true,
-    pointRadiusMinPixels: 2,
-    pointRadiusScale: 8000,
-    getPointRadius: (f) => f.properties.mag,
-    getFillColor: [200, 0, 80, 180],
-    // Interactive props
-    pickable: true,
-    autoHighlight: true,
-    onClick,
-  });
 
   useEffect(() => {
     const debounceTime = 1000;
@@ -88,17 +77,37 @@ export default function MapContainer() {
       <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
         controller
-        layers={earthquakeData.loaded && layers}
+        // layers={earthquakeData.loaded && layers}
         ContextProvider={MapContext.Provider}
         style={{ width: "100%", height: "100%", position: "relative" }}
       >
+        {earthquakeData.loaded && (
+          <GeoJsonLayer
+            id="earthquakes"
+            data={earthquakeData.data}
+            // Styles
+            filled
+            pointRadiusMinPixels={2}
+            pointRadiusScale={8000}
+            getPointRadius={(f) => f.properties.mag}
+            getFillColor={[200, 0, 80, 180]}
+            // Interactive props
+            pickable
+            autoHighlight
+            onClick={onClick}
+          />
+        )}
         <StaticMap mapStyle={MAP_STYLE} />
         <NavigationControl style={NAV_CONTROL_STYLE} />
       </DeckGL>
-      <FloatingPanel
+      <FloatingFilterPanel
         handleDateChange={setDates}
         datesState={dates}
         loaded={loaded}
+      />
+      <FloatingDataPanel
+        earthquakeDetails={earthquakeDetails}
+        setEarthquakeDetails={setEarthquakeDetails}
       />
     </>
   );
