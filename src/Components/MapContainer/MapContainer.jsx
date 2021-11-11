@@ -3,6 +3,7 @@ import { StaticMap, MapContext, NavigationControl } from "react-map-gl";
 import DeckGL, { GeoJsonLayer } from "deck.gl";
 import { toast } from "react-toastify";
 import { getEarthquakesByDate } from "../../api/earthquake-api";
+import FloatingPanel from "../FloatingPanel/FloatingPanel";
 
 const INITIAL_VIEW_STATE = {
   latitude: 33.6713333,
@@ -20,11 +21,16 @@ const NAV_CONTROL_STYLE = {
   left: 10,
 };
 
-export default function MapContainer({ dates }) {
+export default function MapContainer() {
   const [earthquakeData, setEarthquakeData] = useState({
     loaded: false,
     data: [],
   });
+  const initialDates = {
+    startDate: "2017-10-01",
+    endDate: "2017-10-16",
+  };
+  const [dates, setDates] = useState(initialDates);
   const [loaded, setLoaded] = useState(true);
   const dateRef = useRef(dates);
   dateRef.current = dates;
@@ -59,12 +65,13 @@ export default function MapContainer({ dates }) {
     autoHighlight: true,
     onClick,
   });
+
   useEffect(() => {
     const debounceTime = 1000;
     if (loaded) {
       setLoaded(false);
-      setTimeout(() => {
-        fetchEarthquakeDataByDate(
+      setTimeout(async () => {
+        await fetchEarthquakeDataByDate(
           dateRef.current.startDate,
           dateRef.current.endDate,
         );
@@ -77,17 +84,22 @@ export default function MapContainer({ dates }) {
     fetchEarthquakeDataByDate(dates.startDate, dates.endDate);
   }, []);
   return (
-    // <div className="h-auto">
-    <DeckGL
-      initialViewState={INITIAL_VIEW_STATE}
-      controller
-      layers={earthquakeData.loaded && layers}
-      ContextProvider={MapContext.Provider}
-      style={{ width: "100%", height: "100%", position: "relative" }}
-    >
-      <StaticMap mapStyle={MAP_STYLE} />
-      <NavigationControl style={NAV_CONTROL_STYLE} />
-    </DeckGL>
-    // </div>
+    <>
+      <DeckGL
+        initialViewState={INITIAL_VIEW_STATE}
+        controller
+        layers={earthquakeData.loaded && layers}
+        ContextProvider={MapContext.Provider}
+        style={{ width: "100%", height: "100%", position: "relative" }}
+      >
+        <StaticMap mapStyle={MAP_STYLE} />
+        <NavigationControl style={NAV_CONTROL_STYLE} />
+      </DeckGL>
+      <FloatingPanel
+        handleDateChange={setDates}
+        datesState={dates}
+        loaded={loaded}
+      />
+    </>
   );
 }
