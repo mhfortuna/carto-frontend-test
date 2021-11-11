@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { StaticMap, MapContext, NavigationControl } from "react-map-gl";
 import DeckGL, { GeoJsonLayer } from "deck.gl";
 import { toast } from "react-toastify";
@@ -20,15 +20,18 @@ const NAV_CONTROL_STYLE = {
   left: 10,
 };
 
-export default function MapContainer() {
+export default function MapContainer({ dates }) {
   const [earthquakeData, setEarthquakeData] = useState({
     loaded: false,
     data: [],
   });
+  const [loaded, setLoaded] = useState(true);
+  const dateRef = useRef(dates);
+  dateRef.current = dates;
 
-  const fetchEarthquakeData = async () => {
+  const fetchEarthquakeDataByDate = async (startDate, endDate) => {
     try {
-      const { data } = await getEarthquakesByDate();
+      const { data } = await getEarthquakesByDate(startDate, endDate);
       setEarthquakeData({ loaded: true, data });
     } catch (error) {
       toast(error.message, { type: "error" });
@@ -57,7 +60,21 @@ export default function MapContainer() {
     onClick,
   });
   useEffect(() => {
-    fetchEarthquakeData();
+    const debounceTime = 1000;
+    if (loaded) {
+      setLoaded(false);
+      setTimeout(() => {
+        fetchEarthquakeDataByDate(
+          dateRef.current.startDate,
+          dateRef.current.endDate,
+        );
+        setLoaded(true);
+      }, debounceTime);
+    }
+  }, [dates]);
+
+  useEffect(() => {
+    fetchEarthquakeDataByDate(dates.startDate, dates.endDate);
   }, []);
   return (
     // <div className="h-auto">
