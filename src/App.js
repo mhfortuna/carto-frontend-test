@@ -1,18 +1,15 @@
 import React from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import MapContainer from "./Components/MapContainer/MapContainer";
+import RouterComponent from "./components/Router";
 
 function App() {
   return (
     <>
-      <div className="App">
-        {/* <header className="App-header">
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-        </header> */}
-        <MapContainer />
-      </div>
+      <RouterComponent />
+      {/* <div className="App"></div> */}
+      <ToastContainer draggable theme="colored" />
     </>
   );
 }

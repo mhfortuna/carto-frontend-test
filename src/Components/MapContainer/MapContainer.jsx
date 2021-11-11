@@ -1,15 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StaticMap, MapContext, NavigationControl } from "react-map-gl";
 import DeckGL, { GeoJsonLayer } from "deck.gl";
-// import {ColumnLayer} from '@deck.gl/layers';
-
-// source: Natural Earth http://www.naturalearthdata.com/ via geojson.xyz
-const AIR_PORTS =
-  "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_airports.geojson";
+import { toast } from "react-toastify";
+import { getEarthquakesByDate } from "../../api/earthquake-api";
 
 const INITIAL_VIEW_STATE = {
-  latitude: 51.47,
-  longitude: 0.45,
+  latitude: 33.6713333,
+  longitude: -116.7165,
   zoom: 4,
   bearing: 0,
   pitch: 30,
@@ -24,53 +21,56 @@ const NAV_CONTROL_STYLE = {
 };
 
 export default function MapContainer() {
-  const onClick = (info) => {
-    if (info.object) {
-      // eslint-disable-next-line
-      alert(
-        `${info.object.properties.name} (${info.object.properties.abbrev})`,
-      );
+  const [earthquakeData, setEarthquakeData] = useState({
+    loaded: false,
+    data: [],
+  });
+
+  const fetchEarthquakeData = async () => {
+    try {
+      const { data } = await getEarthquakesByDate();
+      setEarthquakeData({ loaded: true, data });
+    } catch (error) {
+      toast(error.message, { type: "error" });
     }
   };
 
-  const layers = [
-    new GeoJsonLayer({
-      id: "airports",
-      data: AIR_PORTS,
-      // Styles
-      filled: true,
-      pointRadiusMinPixels: 2,
-      pointRadiusScale: 2000,
-      getPointRadius: (f) => 11 - f.properties.scalerank,
-      getFillColor: [200, 0, 80, 180],
-      // Interactive props
-      pickable: true,
-      autoHighlight: true,
-      onClick,
-    }),
-    // new ArcLayer({
-    //   id: "arcs",
-    //   data: AIR_PORTS,
-    //   dataTransform: (d) =>
-    //     d.features.filter((f) => f.properties.scalerank < 4),
-    //   // Styles
-    //   getSourcePosition: () => [-0.4531566, 51.4709959], // London
-    //   getTargetPosition: (f) => f.geometry.coordinates,
-    //   getSourceColor: [0, 128, 200],
-    //   getTargetColor: [200, 0, 80],
-    //   getWidth: 1,
-    // }),
-  ];
+  const onClick = (event) => {
+    if (event.object) {
+      toast(event.object.properties.title, { type: "success" });
+      console.log(event.object.properties);
+    }
+  };
 
+  const layers = new GeoJsonLayer({
+    id: "earthquakes",
+    data: earthquakeData.data,
+    // Styles
+    filled: true,
+    pointRadiusMinPixels: 2,
+    pointRadiusScale: 8000,
+    getPointRadius: (f) => f.properties.mag,
+    getFillColor: [200, 0, 80, 180],
+    // Interactive props
+    pickable: true,
+    autoHighlight: true,
+    onClick,
+  });
+  useEffect(() => {
+    fetchEarthquakeData();
+  }, []);
   return (
+    // <div className="h-auto">
     <DeckGL
       initialViewState={INITIAL_VIEW_STATE}
       controller
-      layers={layers}
+      layers={earthquakeData.loaded && layers}
       ContextProvider={MapContext.Provider}
+      style={{ width: "100%", height: "100%", position: "relative" }}
     >
       <StaticMap mapStyle={MAP_STYLE} />
       <NavigationControl style={NAV_CONTROL_STYLE} />
     </DeckGL>
+    // </div>
   );
 }
