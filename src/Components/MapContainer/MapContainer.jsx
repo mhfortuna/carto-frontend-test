@@ -79,7 +79,12 @@ export default function MapContainer() {
         controller
         // layers={earthquakeData.loaded && layers}
         ContextProvider={MapContext.Provider}
-        style={{ width: "100%", height: "100%", position: "relative" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "relative",
+          zIndex: 10,
+        }}
       >
         {earthquakeData.loaded && (
           <GeoJsonLayer

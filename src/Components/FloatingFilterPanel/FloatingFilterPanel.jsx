@@ -13,12 +13,12 @@ export default function FloatingFilterPanel({
 
   return (
     <motion.div
-      className="flex flex-col absolute right-2 top-2 rounded-lg overflow-hidden bg-pink-800	bg-opacity-75 text-white p-4 gap-y-4 w-80"
+      className="flex flex-col absolute right-2 top-2 rounded-lg overflow-hidden bg-pink-800	bg-opacity-75 text-white p-4 gap-y-4 w-80 z-30"
       initial={{ x: 600 }}
       animate={{ x: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <p className="font-light text-2xl">Filter earthquakes</p>
+      <p className="font-bold text-2xl">Filter earthquakes</p>
       <div>
         <DateInput
           placeholder="Pick start date"
