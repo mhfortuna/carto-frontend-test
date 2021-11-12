@@ -36,6 +36,12 @@ export default function FloatingFilterPanel({
         />
       </div>
       <div className="flex justify-center items-center">
+        <button
+          className="w-1/2 flex items-center justify-center rounded-full bg-gray-900 bg-opacity-75 p-2 text-white ml-auto"
+          type="button"
+        >
+          See details
+        </button>
         {!loaded ? (
           <div
             className="

@@ -93,9 +93,15 @@ export default function MapContainer() {
             // Styles
             filled
             pointRadiusMinPixels={2}
-            pointRadiusScale={8000}
+            pointRadiusMaxPixels={14}
+            pointRadiusScale={4000}
             getPointRadius={(f) => f.properties.mag}
-            getFillColor={[200, 0, 80, 180]}
+            getFillColor={(f) => [
+              255,
+              255 - (f.properties.mag * 255) / 10,
+              51,
+              180,
+            ]}
             // Interactive props
             pickable
             autoHighlight
