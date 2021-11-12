@@ -1,6 +1,12 @@
 import React from "react";
 
-export default function DateInput({ placeholder, id, ...props }) {
+export default function DateInput({
+  placeholder,
+  id,
+  hasErrorMessage,
+  errorMessage,
+  ...props
+}) {
   return (
     <div>
       <label className="text-gray-200 font-normal">{placeholder}</label>
@@ -18,12 +24,15 @@ export default function DateInput({ placeholder, id, ...props }) {
                 font-medium"
         id={id}
         name={id}
-        // placeholder={placeholder}
-        // onChange={onHandleChange}
-        // onBlur={handleBlur}
-        // onInput={handleInput}
         {...props}
       />
+      {hasErrorMessage ? (
+        <div className="font-thin text-sm mt-1 h-3 text-gray-300">
+          {errorMessage}
+        </div>
+      ) : (
+        <div className="font-thin text-sm mt-1 h-3"> </div>
+      )}
     </div>
   );
 }

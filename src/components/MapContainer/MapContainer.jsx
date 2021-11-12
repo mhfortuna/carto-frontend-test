@@ -35,15 +35,17 @@ export default function MapContainer() {
     endDate: "2017-10-16",
   };
   const [dates, setDates] = useState(initialDates);
-  const [loaded, setLoaded] = useState(true);
+  const [loaded, setLoaded] = useState(false);
   const dateRef = useRef(dates);
   dateRef.current = dates;
   const [earthquakeDetails, setEarthquakeDetails] = useState();
 
   const fetchEarthquakeDataByDate = async (startDate, endDate) => {
     try {
+      setLoaded(false);
       const { data } = await getEarthquakesByDate(startDate, endDate);
       setEarthquakeData({ loaded: true, data });
+      setLoaded(true);
     } catch (error) {
       toast(error.message, { type: "error" });
     }
@@ -56,17 +58,10 @@ export default function MapContainer() {
   };
 
   useEffect(() => {
-    const debounceTime = 1000;
-    if (loaded) {
-      setLoaded(false);
-      setTimeout(async () => {
-        await fetchEarthquakeDataByDate(
-          dateRef.current.startDate,
-          dateRef.current.endDate,
-        );
-        setLoaded(true);
-      }, debounceTime);
-    }
+    fetchEarthquakeDataByDate(
+      dateRef.current.startDate,
+      dateRef.current.endDate,
+    );
   }, [dates]);
 
   useEffect(() => {
@@ -77,7 +72,6 @@ export default function MapContainer() {
       <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
         controller
-        // layers={earthquakeData.loaded && layers}
         ContextProvider={MapContext.Provider}
         style={{
           width: "100%",
