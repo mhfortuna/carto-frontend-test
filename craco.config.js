@@ -15,7 +15,6 @@ module.exports = {
     },
   },
   babel: {
-    presets: ["my-custom-babel-preset"],
     ignore: ["./node_modules/mapbox-gl/dist/mapbox-gl.js"],
   },
 };
