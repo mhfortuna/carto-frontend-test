@@ -47,7 +47,14 @@ export default function MapContainer() {
       setEarthquakeData({ loaded: true, data });
       setLoaded(true);
     } catch (error) {
-      toast(error.message, { type: "error" });
+      if (error.response && error.response.status === 400) {
+        toast("Too many earthquakes between these dates, reduce dates range", {
+          type: "error",
+        });
+      } else {
+        toast(error.message, { type: "error" });
+      }
+      setLoaded(true);
     }
   };
 

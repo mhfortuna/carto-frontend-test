@@ -34,8 +34,7 @@ export default function FloatingFilterPanel({
           placeholder="Pick start date"
           onChange={formik.handleChange}
           value={formik.values.startDate}
-          handleChange={formik.handleChange}
-          handleBlur={formik.handleBlur}
+          onBlur={formik.handleBlur}
           id="startDate"
           hasErrorMessage
           errorMessage={formik.errors.startDate}
@@ -46,8 +45,7 @@ export default function FloatingFilterPanel({
           placeholder="Pick end date"
           onChange={formik.handleChange}
           value={formik.values.endDate}
-          handleChange={formik.handleChange}
-          handleBlur={formik.handleBlur}
+          onBlur={formik.handleBlur}
           id="endDate"
           hasErrorMessage
           errorMessage={formik.errors.endDate}
