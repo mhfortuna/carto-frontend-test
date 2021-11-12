@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { StaticMap, MapContext, NavigationControl } from "react-map-gl";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import DeckGL from "@deck.gl/react";
@@ -9,14 +9,6 @@ import { getEarthquakesByDate } from "../../api/earthquake-api";
 import FloatingFilterPanel from "../FloatingFilterPanel";
 import FloatingDataPanel from "../FloatingDataPanel/FloatingDataPanel";
 
-const INITIAL_VIEW_STATE = {
-  latitude: 33.6713333,
-  longitude: -116.7165,
-  zoom: 4,
-  bearing: 0,
-  pitch: 30,
-};
-
 const MAP_STYLE =
   "https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json";
 const NAV_CONTROL_STYLE = {
@@ -26,10 +18,7 @@ const NAV_CONTROL_STYLE = {
 };
 
 export default function MapContainer() {
-  const [earthquakeData, setEarthquakeData] = useState({
-    loaded: false,
-    data: [],
-  });
+  // Dates range
   const localStorageDatesKey = "EARTHQUAKES_DATES";
   const initialDates = localStorage.getItem(localStorageDatesKey)
     ? JSON.parse(localStorage.getItem(localStorageDatesKey))
@@ -38,17 +27,18 @@ export default function MapContainer() {
         endDate: "2017-10-16",
       };
   const [dates, setDates] = useState(initialDates);
-  const [loaded, setLoaded] = useState(false);
-  const dateRef = useRef(dates);
-  dateRef.current = dates;
-  const [earthquakeDetails, setEarthquakeDetails] = useState();
+
+  // API data
+  const [earthquakeData, setEarthquakeData] = useState({
+    loaded: false,
+    data: [],
+  });
 
   const fetchEarthquakeDataByDate = async (startDate, endDate) => {
     try {
-      setLoaded(false);
+      setEarthquakeData({ ...earthquakeData, loaded: false });
       const { data } = await getEarthquakesByDate(startDate, endDate);
       setEarthquakeData({ loaded: true, data });
-      setLoaded(true);
     } catch (error) {
       if (error.response && error.response.status === 400) {
         toast("Too many earthquakes between these dates, reduce dates range", {
@@ -57,31 +47,48 @@ export default function MapContainer() {
       } else {
         toast(error.message, { type: "error" });
       }
-      setLoaded(true);
+      setEarthquakeData({ ...earthquakeData, loaded: true });
     }
   };
 
-  const onClick = (event) => {
+  useEffect(() => {
+    fetchEarthquakeDataByDate(dates.startDate, dates.endDate);
+    localStorage.setItem(localStorageDatesKey, JSON.stringify(dates));
+  }, [dates]);
+
+  // Map viewport
+  const localStorageViewKey = "EARTHQUAKES_VIEW";
+  const initialViewState = localStorage.getItem(localStorageViewKey)
+    ? JSON.parse(localStorage.getItem(localStorageViewKey))
+    : {
+        latitude: 33.6713333,
+        longitude: -116.7165,
+        zoom: 4,
+        bearing: 0,
+        pitch: 30,
+      };
+
+  const handleViewStateChange = (viewState) => {
+    localStorage.setItem(
+      localStorageViewKey,
+      JSON.stringify(viewState.viewState),
+    );
+  };
+
+  // Earthquake details panel
+  const [earthquakeDetails, setEarthquakeDetails] = useState();
+
+  const handleClick = (event) => {
     if (event.object) {
       setEarthquakeDetails(event.object);
     }
   };
 
-  useEffect(() => {
-    fetchEarthquakeDataByDate(
-      dateRef.current.startDate,
-      dateRef.current.endDate,
-    );
-    localStorage.setItem(localStorageDatesKey, JSON.stringify(dates));
-  }, [dates]);
-
-  useEffect(() => {
-    fetchEarthquakeDataByDate(dates.startDate, dates.endDate);
-  }, []);
   return (
     <>
       <DeckGL
-        initialViewState={INITIAL_VIEW_STATE}
+        initialViewState={initialViewState}
+        onViewStateChange={handleViewStateChange}
         controller
         ContextProvider={MapContext.Provider}
         style={{
@@ -91,7 +98,7 @@ export default function MapContainer() {
           zIndex: 10,
         }}
       >
-        {earthquakeData.loaded && (
+        {earthquakeData.data && (
           <GeoJsonLayer
             id="earthquakes"
             data={earthquakeData.data}
@@ -110,7 +117,7 @@ export default function MapContainer() {
             // Interactive props
             pickable
             autoHighlight
-            onClick={onClick}
+            onClick={handleClick}
           />
         )}
         <StaticMap mapStyle={MAP_STYLE} />
@@ -119,7 +126,7 @@ export default function MapContainer() {
       <FloatingFilterPanel
         handleDateChange={setDates}
         datesState={dates}
-        loaded={loaded}
+        loaded={earthquakeData.loaded}
       />
       <FloatingDataPanel
         earthquakeDetails={earthquakeDetails}
