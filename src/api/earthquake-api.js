@@ -17,3 +17,10 @@ export async function getEarthquakesByDate(
     `/query?format=geojson&starttime=${startDate}&endtime=${endDate}`,
   );
 }
+
+export async function getEarthquakeById(
+  id = "ak10992887",
+  api = makeEarthquakeApi(),
+) {
+  return api.get(`/query?format=geojson&eventid=${id}`);
+}
