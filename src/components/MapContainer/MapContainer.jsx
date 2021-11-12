@@ -30,10 +30,13 @@ export default function MapContainer() {
     loaded: false,
     data: [],
   });
-  const initialDates = {
-    startDate: "2017-10-01",
-    endDate: "2017-10-16",
-  };
+  const localStorageDatesKey = "EARTHQUAKES_DATES";
+  const initialDates = localStorage.getItem(localStorageDatesKey)
+    ? JSON.parse(localStorage.getItem(localStorageDatesKey))
+    : {
+        startDate: "2017-10-01",
+        endDate: "2017-10-16",
+      };
   const [dates, setDates] = useState(initialDates);
   const [loaded, setLoaded] = useState(false);
   const dateRef = useRef(dates);
@@ -69,6 +72,7 @@ export default function MapContainer() {
       dateRef.current.startDate,
       dateRef.current.endDate,
     );
+    localStorage.setItem(localStorageDatesKey, JSON.stringify(dates));
   }, [dates]);
 
   useEffect(() => {
