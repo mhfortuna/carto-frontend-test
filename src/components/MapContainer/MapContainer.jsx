@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { getEarthquakesByDate } from "../../api/earthquake-api";
 import FloatingFilterPanel from "../FloatingFilterPanel";
 import FloatingDataPanel from "../FloatingDataPanel/FloatingDataPanel";
+import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css";
 
 const MAP_STYLE =
   "https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json";
