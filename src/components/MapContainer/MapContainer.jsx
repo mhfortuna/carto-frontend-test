@@ -57,6 +57,7 @@ export default function MapContainer() {
   }, [dates]);
 
   // Map viewport
+  let isHovering = false;
   const localStorageViewKey = "EARTHQUAKES_VIEW";
   const initialViewState = localStorage.getItem(localStorageViewKey)
     ? JSON.parse(localStorage.getItem(localStorageViewKey))
@@ -97,6 +98,21 @@ export default function MapContainer() {
           position: "relative",
           zIndex: 10,
         }}
+        onHover={({ object }) => {
+          isHovering = Boolean(object);
+        }}
+        getCursor={
+          ({ isDragging }) => {
+            if (isDragging) {
+              return "grabbing";
+            }
+            if (isHovering) {
+              return "pointer";
+            }
+            return "grab";
+          }
+          // isDragging ? "grabbing" : isHovering ? "pointer" : "grab"
+        }
       >
         {earthquakeData.data && (
           <GeoJsonLayer
