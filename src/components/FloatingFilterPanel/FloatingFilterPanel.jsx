@@ -25,7 +25,7 @@ export default function FloatingFilterPanel({
       className="flex flex-col absolute right-2 top-2 rounded-lg overflow-hidden bg-pink-800	bg-opacity-75 text-white p-4 gap-y-4 w-80 z-30"
       initial={{ x: 600 }}
       animate={{ x: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }}
       onSubmit={formik.handleSubmit}
     >
       <p className="font-bold text-2xl">Filter earthquakes</p>

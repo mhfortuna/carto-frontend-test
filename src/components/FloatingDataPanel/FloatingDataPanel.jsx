@@ -19,7 +19,7 @@ export default function FloatingDataPanel({
           initial={{ x: 600 }}
           animate={{ x: 0 }}
           exit={{ x: 600 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }}
         >
           {/* <div className="flex flex-row"> */}
           <p className="font-bold text-2xl">Earthquake details:</p>
