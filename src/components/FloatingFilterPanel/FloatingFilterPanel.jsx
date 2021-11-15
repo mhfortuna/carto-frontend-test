@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useFormik } from "formik";
-import { FiMinimize2 } from "react-icons/fi";
+import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
 import DateInput from "../DateInput/DateInput";
 import filterPanelSchema from "./filter-panel-schema";
 
@@ -104,7 +104,7 @@ export default function FloatingFilterPanel({
             type="button"
             onClick={handleMinimize}
           >
-            <FiMinimize2 size="1.5em" className="" />
+            <FiMaximize2 size="1.5em" className="" />
           </button>
         </div>
       )}
