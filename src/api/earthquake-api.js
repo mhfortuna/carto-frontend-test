@@ -11,6 +11,8 @@ export function makeEarthquakeApi() {
 export async function getEarthquakesByDate(
   startDate = "2017-10-01",
   endDate = "2017-10-16",
+  // limit = 1000,
+  // orderby = "magnitude",
   api = makeEarthquakeApi(),
 ) {
   return api.get(
