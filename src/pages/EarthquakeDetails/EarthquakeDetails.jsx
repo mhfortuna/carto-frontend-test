@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useMatch, Link } from "react-router-dom";
+import { useMatch, Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   BiCalendarExclamation,
@@ -14,6 +14,7 @@ import { milisecondsToDate } from "../../utils/date-functions";
 import backgroundMap from "../../assets/img/world.svg";
 
 export default function EarthquakeDetails() {
+  const navigate = useNavigate();
   const { earthquakeId } = useMatch(`${APP.EARTHQUAKE}/:earthquakeId`).params;
   const [earthquakeData, setEarthquakeData] = useState({
     data: [],
@@ -25,7 +26,14 @@ export default function EarthquakeDetails() {
       const { data } = await getEarthquakeById(id);
       setEarthquakeData({ data, loaded: true });
     } catch (error) {
-      toast(error.message, { type: "error" });
+      if (error.response && error.response.status === 404) {
+        toast("Earthquake ID not found", {
+          type: "error",
+        });
+      } else {
+        toast(error.message, { type: "error" });
+      }
+      navigate(APP.HOME);
     }
   };
 
