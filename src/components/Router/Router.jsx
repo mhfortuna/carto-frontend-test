@@ -3,9 +3,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
 import { APP } from "../../constants/routes";
-import EarthquakeDetails from "../../pages/EarthquakeDetails";
 
+import EarthquakeDetails from "../../pages/EarthquakeDetails";
 import Home from "../../pages/Home";
+import NoMatch from "../../pages/NoMatch";
 
 export default function Router() {
   return (
@@ -18,9 +19,7 @@ export default function Router() {
             exact
             element={<EarthquakeDetails />}
           />
-          {/* <PrivateRoute path="*">
-          <NoMatch/>
-        </PrivateRoute> */}
+          <Route path="*" element={<NoMatch />} />
         </Routes>
       </AnimatePresence>
     </BrowserRouter>
