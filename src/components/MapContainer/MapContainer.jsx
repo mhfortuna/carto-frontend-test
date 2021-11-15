@@ -125,12 +125,11 @@ export default function MapContainer() {
             pointRadiusMaxPixels={20}
             pointRadiusScale={7000}
             getPointRadius={(f) => f.properties.mag}
-            getFillColor={(f) => [
-              255,
-              255 - (f.properties.mag * 255) / 10,
-              51,
-              180,
-            ]}
+            getFillColor={(f) =>
+              f.properties.status === "reviewed"
+                ? [255, 255 - (f.properties.mag * 255) / 10, 51, 180]
+                : [51, 255 - (f.properties.mag * 255) / 10, 255, 180]
+            }
             // Interactive props
             pickable
             autoHighlight
