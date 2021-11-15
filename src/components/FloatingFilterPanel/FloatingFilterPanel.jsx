@@ -28,7 +28,7 @@ export default function FloatingFilterPanel({
   });
 
   const classNames = !isMinimized
-    ? "flex flex-col absolute right-4 top-4 rounded-lg overflow-hidden bg-pink-800	bg-opacity-75 text-white p-4 gap-y-2 xl:gap-y-4 z-30 w-80"
+    ? "flex flex-col absolute right-4 top-4 rounded-lg overflow-hidden bg-pink-800	bg-opacity-75 text-white select-none p-4 gap-y-2 xl:gap-y-4 z-30 w-80"
     : "flex flex-col absolute right-2 top-2 rounded-lg overflow-hidden bg-pink-800	bg-opacity-75 text-white p-4 gap-y-2 xl:gap-y-4 z-30";
 
   return (

@@ -46,7 +46,7 @@ export default function EarthquakeDetails() {
       <div className="flex flex-col justify-center h-full ">
         <div className="flex flex-col w-11/12 lg:w-2/3 xl:w-1/2 2xl:w-2/5 mx-auto mt-6 bg-pink-700 bg-opacity-80 text-gray-200 p-6 rounded-xl gap-y-4">
           <div className="flex flex-col">
-            <p className="text-4xl xl:text-5xl text-center uppercase font-extrabold">
+            <p className="text-4xl xl:text-5xl text-center uppercase font-extrabold select-none">
               Earthquake details
             </p>
             {/* <div className="flex justify-end m-0"> */}
@@ -127,7 +127,7 @@ export default function EarthquakeDetails() {
               </p>
             )}
             <Link
-              className="px-6 flex items-center justify-center rounded-full bg-gray-900 bg-opacity-75 p-2 text-white ml-auto "
+              className="px-6 flex items-center justify-center rounded-full bg-gray-900 bg-opacity-75 p-2 text-white select-none ml-auto"
               to={APP.HOME}
             >
               Go back

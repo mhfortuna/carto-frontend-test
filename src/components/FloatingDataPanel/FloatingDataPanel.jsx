@@ -23,7 +23,9 @@ export default function FloatingDataPanel({
             transition={{ duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }}
           >
             {/* <div className="flex flex-row"> */}
-            <p className="font-bold text-2xl">Earthquake details:</p>
+            <p className="font-bold text-2xl select-none">
+              Earthquake details:
+            </p>
             <button
               className="p-0 ml-auto flex items-center justify-center rounded-md text-white absolute top-5 right-3"
               type="button"
@@ -33,17 +35,17 @@ export default function FloatingDataPanel({
             </button>
             {/* </div> */}
             <div className="">
-              <p className="font-medium text-lg mb-0">Location</p>
+              <p className="font-medium text-lg mb-0 select-none">Location</p>
               <p className="text-lg break-normal">
                 {earthquakeDetails.properties.place}
               </p>
             </div>
             <div>
-              <p className="font-medium text-lg mb-0">ID</p>
+              <p className="font-medium text-lg mb-0 select-none">ID</p>
               <p className="text-lg break-normal">{earthquakeDetails.id}</p>
             </div>
             <Link
-              className="w-1/2 flex items-center justify-center rounded-full bg-gray-900 bg-opacity-75 p-2 text-white ml-auto"
+              className="w-1/2 flex items-center justify-center rounded-full bg-gray-900 bg-opacity-75 p-2 text-white select-none ml-auto"
               to={`${APP.EARTHQUAKE}/${earthquakeDetails.id}`}
             >
               See details
