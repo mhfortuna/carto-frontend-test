@@ -13,11 +13,11 @@ export async function getEarthquakesByDate(
   endDate = "2017-10-16",
   eventType = "earthquake",
   limit = 20000,
-  // orderby = "magnitude",
+  orderBy = "magnitude",
   api = makeEarthquakeApi(),
 ) {
   return api.get(
-    `/query?format=geojson&starttime=${startDate}&endtime=${endDate}&eventtype${eventType}&limit=${limit}`,
+    `/query?format=geojson&starttime=${startDate}&endtime=${endDate}&eventtype${eventType}&orderby=${orderBy}&limit=${limit}`,
   );
 }
 
