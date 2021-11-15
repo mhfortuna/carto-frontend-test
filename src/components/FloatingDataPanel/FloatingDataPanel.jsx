@@ -2,6 +2,7 @@ import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
+
 import { APP } from "../../constants/routes";
 
 export default function FloatingDataPanel({
@@ -22,7 +23,6 @@ export default function FloatingDataPanel({
             exit={{ x: 600 }}
             transition={{ duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }}
           >
-            {/* <div className="flex flex-row"> */}
             <p className="font-bold text-2xl select-none">
               Earthquake details:
             </p>
@@ -33,7 +33,6 @@ export default function FloatingDataPanel({
             >
               <MdClose size="1.5em" className="" />
             </button>
-            {/* </div> */}
             <div className="">
               <p className="font-medium text-lg mb-0 select-none">Location</p>
               <p className="text-lg break-normal">

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useFormik } from "formik";
 import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
-import DateInput from "../DateInput/DateInput";
+
+import DateInput from "../DateInput";
 import filterPanelSchema from "./filter-panel-schema";
 
 export default function FloatingFilterPanel({

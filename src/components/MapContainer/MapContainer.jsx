@@ -1,22 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { StaticMap, MapContext, NavigationControl } from "react-map-gl";
-// eslint-disable-next-line import/no-extraneous-dependencies
-import DeckGL from "@deck.gl/react";
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { GeoJsonLayer } from "@deck.gl/layers";
 import { toast } from "react-toastify";
+import { StaticMap, MapContext, NavigationControl } from "react-map-gl";
+import { DeckGL, GeoJsonLayer } from "deck.gl";
+
 import { getEarthquakesByDate } from "../../api/earthquake-api";
 import FloatingFilterPanel from "../FloatingFilterPanel";
-import FloatingDataPanel from "../FloatingDataPanel/FloatingDataPanel";
-import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css";
+import FloatingDataPanel from "../FloatingDataPanel";
 
-const MAP_STYLE =
-  "https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json";
-const NAV_CONTROL_STYLE = {
-  position: "absolute",
-  top: 10,
-  left: 10,
-};
+import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css";
 
 export default function MapContainer() {
   // Dates range
@@ -24,7 +15,7 @@ export default function MapContainer() {
   const initialDates = localStorage.getItem(localStorageDatesKey)
     ? JSON.parse(localStorage.getItem(localStorageDatesKey))
     : {
-        startDate: "2017-10-01",
+        startDate: "2017-10-15",
         endDate: "2017-10-16",
       };
   const [dates, setDates] = useState(initialDates);
@@ -69,6 +60,13 @@ export default function MapContainer() {
         bearing: 0,
         pitch: 30,
       };
+  const MAP_STYLE =
+    "https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json";
+  const NAV_CONTROL_STYLE = {
+    position: "absolute",
+    top: 10,
+    left: 10,
+  };
 
   const handleViewStateChange = (viewState) => {
     localStorage.setItem(
@@ -102,18 +100,15 @@ export default function MapContainer() {
         onHover={({ object }) => {
           isHovering = Boolean(object);
         }}
-        getCursor={
-          ({ isDragging }) => {
-            if (isDragging) {
-              return "grabbing";
-            }
-            if (isHovering) {
-              return "pointer";
-            }
-            return "grab";
+        getCursor={({ isDragging }) => {
+          if (isDragging) {
+            return "grabbing";
           }
-          // isDragging ? "grabbing" : isHovering ? "pointer" : "grab"
-        }
+          if (isHovering) {
+            return "pointer";
+          }
+          return "grab";
+        }}
       >
         {earthquakeData.data && (
           <GeoJsonLayer

@@ -7,7 +7,6 @@ function App() {
   return (
     <>
       <RouterComponent />
-      {/* <div className="App"></div> */}
       <ToastContainer draggable theme="colored" />
     </>
   );

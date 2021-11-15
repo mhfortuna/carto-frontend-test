@@ -7,6 +7,7 @@ import {
   BiCurrentLocation,
   BiX,
 } from "react-icons/bi";
+
 import { getEarthquakeById } from "../../api/earthquake-api";
 import Layout from "../../components/Layout";
 import { APP } from "../../constants/routes";
@@ -49,12 +50,10 @@ export default function EarthquakeDetails() {
             <p className="text-4xl xl:text-5xl text-center uppercase font-extrabold select-none">
               Earthquake details
             </p>
-            {/* <div className="flex justify-end m-0"> */}
             <p className="text-base text-gray-900 text-center font-medium">
               <span className="uppercase font-medium">ID: </span>
               {earthquakeId}
             </p>
-            {/* </div> */}
           </div>
           {earthquakeData.loaded ? (
             <>

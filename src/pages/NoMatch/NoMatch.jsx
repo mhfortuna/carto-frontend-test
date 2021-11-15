@@ -1,15 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import {
-//   BiCalendarExclamation,
-//   BiCheckDouble,
-//   BiCurrentLocation,
-//   BiX,
-// } from "react-icons/bi";
 import { MdOutlineDangerous } from "react-icons/md";
+
 import Layout from "../../components/Layout";
 import { APP } from "../../constants/routes";
-
 import backgroundMap from "../../assets/img/world.svg";
 
 export default function NoMatch() {
@@ -23,7 +17,6 @@ export default function NoMatch() {
               Page not found!{" "}
               <MdOutlineDangerous className="inline-block mb-1" size="50px" />
             </p>
-            {/* </div> */}
             <p className="text-lg break-normal font-semibold my-6">
               If you are seeing this page, it means that the page you are
               looking for does not exist.
