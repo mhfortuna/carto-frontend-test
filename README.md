@@ -5,7 +5,7 @@ This is a web app showing earthquakes that happen in the world for a specific ra
 
 **NOTE**: This projects is just a frontend development and uses the USGS API to access to all the data. Therefore, the app loading speeds depend mostly from this API availability (from 0.5s to 30s in my tests). It is recommended to make small queries to reduce load times (not many days in range).
 
-> You can see this project deployed at [here](https://home-5005757081.app-ionos.space/)
+> You can see this project deployed at [here](https://projects.mathiasfortuna.com/quakelocator)
 
 ### Features
 - LocalStorage to save position on map and latest filter properties
