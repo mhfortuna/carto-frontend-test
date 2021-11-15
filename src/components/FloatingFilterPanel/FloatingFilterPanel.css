@@ -1,0 +1,4 @@
+.form[data-is-minimized="true"] {
+  width: 400px !important;
+  height: 200px !important;
+}

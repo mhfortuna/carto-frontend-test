@@ -104,9 +104,9 @@ export default function MapContainer() {
             data={earthquakeData.data}
             // Styles
             filled
-            pointRadiusMinPixels={2}
-            pointRadiusMaxPixels={14}
-            pointRadiusScale={4000}
+            pointRadiusMinPixels={5}
+            pointRadiusMaxPixels={20}
+            pointRadiusScale={7000}
             getPointRadius={(f) => f.properties.mag}
             getFillColor={(f) => [
               255,

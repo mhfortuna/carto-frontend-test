@@ -44,9 +44,9 @@ export default function EarthquakeDetails() {
   return (
     <Layout>
       <div className="flex flex-col justify-center h-full ">
-        <div className="flex flex-col w-2/3 mx-auto mt-6 bg-pink-700 bg-opacity-80 text-gray-200 p-6 rounded-xl gap-y-4">
+        <div className="flex flex-col w-11/12 lg:w-2/3 xl:w-1/2 2xl:w-2/5 mx-auto mt-6 bg-pink-700 bg-opacity-80 text-gray-200 p-6 rounded-xl gap-y-4">
           <div className="flex flex-col">
-            <p className="text-5xl text-center uppercase font-extrabold">
+            <p className="text-4xl xl:text-5xl text-center uppercase font-extrabold">
               Earthquake details
             </p>
             {/* <div className="flex justify-end m-0"> */}
@@ -58,12 +58,12 @@ export default function EarthquakeDetails() {
           </div>
           {earthquakeData.loaded ? (
             <>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
                 <p className="text-lg break-normal capitalize">
                   <span className="font-extrabold uppercase">Type: </span>
                   {earthquakeData.data.properties.type}
                 </p>
-                <p className="text-lg break-normal">
+                <p className="text-lg break-normal order-4 md:order-none">
                   <span className="font-extrabold uppercase">
                     <BiCurrentLocation
                       className="inline-block mb-1 mr-2"
@@ -78,7 +78,7 @@ export default function EarthquakeDetails() {
                   {earthquakeData.data.properties.mag}
                   <span className="font-thin text-gray-300">{` [${earthquakeData.data.properties.magType}]`}</span>
                 </p>
-                <p className="text-lg break-normal">
+                <p className="text-lg break-normal order-5 md:order-none">
                   <span className="font-extrabold uppercase">
                     <BiCalendarExclamation
                       className="inline-block mb-1 mr-2"
@@ -92,7 +92,7 @@ export default function EarthquakeDetails() {
                   <span className="font-extrabold uppercase">Title: </span>
                   {earthquakeData.data.properties.title}
                 </p>
-                <p className="text-lg break-normal capitalize">
+                <p className="text-lg break-normal capitalize order-6 md:order-none">
                   <span className="font-extrabold uppercase">
                     {earthquakeData.data.properties.status === "reviewed" ? (
                       <BiCheckDouble
