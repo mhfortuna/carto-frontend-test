@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useMatch, Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 import {
   BiCalendarExclamation,
   BiCheckDouble,
@@ -125,11 +126,15 @@ export default function EarthquakeDetails() {
                 {milisecondsToDate(earthquakeData.data.properties.updated)}
               </p>
             )}
-            <Link
-              className="px-6 flex items-center justify-center rounded-full bg-gray-900 bg-opacity-75 p-2 text-white select-none ml-auto"
-              to={APP.HOME}
-            >
-              Go back
+            <Link to={APP.HOME}>
+              <motion.button
+                type="button"
+                className="px-6 flex items-center justify-center rounded-full bg-gray-900 bg-opacity-75 p-2 text-white select-none ml-auto"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Go back
+              </motion.button>
             </Link>
           </div>
         </div>

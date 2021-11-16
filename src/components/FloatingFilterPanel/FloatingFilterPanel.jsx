@@ -47,13 +47,17 @@ export default function FloatingFilterPanel({
       {!isMinimized ? (
         <>
           <p className="font-bold text-2xl">Filter earthquakes</p>
-          <button
+          <motion.button
             className="p-0 ml-auto flex items-center justify-center rounded-md text-white absolute top-4 right-3"
             type="button"
             onClick={handleMinimize}
+            whileHover={{
+              color: "#111827",
+              transition: { duration: 0.2 },
+            }}
           >
             <FiMinimize2 size="1.5em" className="" />
-          </button>
+          </motion.button>
           <div>
             <DateInput
               placeholder="Pick start date"
@@ -77,10 +81,12 @@ export default function FloatingFilterPanel({
             />
           </div>
           <div className="flex justify-center items-center">
-            <button
+            <motion.button
               className="w-1/2 flex items-center justify-center rounded-full bg-gray-900 bg-opacity-75 p-2 text-white ml-auto"
               type="submit"
               disabled={!loaded}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               {loaded ? (
                 "Filter"
@@ -95,18 +101,22 @@ export default function FloatingFilterPanel({
     "
                 />
               )}
-            </button>
+            </motion.button>
           </div>
         </>
       ) : (
         <div className="flex items-center justify-center">
-          <button
+          <motion.button
             className="p-0 rounded-md text-white"
             type="button"
             onClick={handleMinimize}
+            whileHover={{
+              color: "#111827",
+              transition: { duration: 0.2 },
+            }}
           >
             <FiMaximize2 size="1.5em" className="" />
-          </button>
+          </motion.button>
         </div>
       )}
     </motion.form>

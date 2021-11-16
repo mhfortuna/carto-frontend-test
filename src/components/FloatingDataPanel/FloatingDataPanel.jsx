@@ -26,13 +26,17 @@ export default function FloatingDataPanel({
             <p className="font-bold text-2xl select-none">
               Earthquake details:
             </p>
-            <button
+            <motion.button
               className="p-0 ml-auto flex items-center justify-center rounded-md text-white absolute top-5 right-3"
               type="button"
               onClick={handleClose}
+              whileHover={{
+                color: "#111827",
+                transition: { duration: 0.2 },
+              }}
             >
               <MdClose size="1.5em" className="" />
-            </button>
+            </motion.button>
             <div className="">
               <p className="font-medium text-lg mb-0 select-none">Location</p>
               <p className="text-lg break-normal">
@@ -43,11 +47,15 @@ export default function FloatingDataPanel({
               <p className="font-medium text-lg mb-0 select-none">ID</p>
               <p className="text-lg break-normal">{earthquakeDetails.id}</p>
             </div>
-            <Link
-              className="w-1/2 flex items-center justify-center rounded-full bg-gray-900 bg-opacity-75 p-2 text-white select-none ml-auto"
-              to={`${APP.EARTHQUAKE}/${earthquakeDetails.id}`}
-            >
-              See details
+            <Link to={`${APP.EARTHQUAKE}/${earthquakeDetails.id}`}>
+              <motion.button
+                className="w-1/2 flex items-center justify-center rounded-full bg-gray-900 bg-opacity-75 p-2 text-white select-none ml-auto"
+                type="button"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                See details
+              </motion.button>
             </Link>
           </motion.div>
         )}
