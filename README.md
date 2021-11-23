@@ -14,6 +14,7 @@ This is a web app showing earthquakes that happen in the world for a specific ra
 - Collapsible filter panel
 - Toast notifications from API errors
 
+# Index
 
 - [Earthquakes Map Visualizer](#earthquakes-map-visualizer)
     - [Features](#features)
